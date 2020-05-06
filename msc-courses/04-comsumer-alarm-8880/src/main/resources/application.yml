@@ -1,0 +1,15 @@
+server:
+  port: 8880
+
+spring:
+  application:
+    name: abcmsc-consumer-depart
+  redis:
+    host: 192.168.2.2
+    port: 6379
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka
+

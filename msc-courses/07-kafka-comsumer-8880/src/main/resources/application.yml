@@ -1,0 +1,23 @@
+server:
+  port: 8880
+
+spring:
+  application:
+    name: abcmsc-consumer-depart
+
+  zipkin:
+    sender:
+      type: kafka
+
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  kafka:
+    bootstrap-servers: 120.24.170.213:9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka
+

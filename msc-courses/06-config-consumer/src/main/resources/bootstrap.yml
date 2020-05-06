@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:9999
+      # 指定要访问的远程库分支
+      label: master
+      # 指定要从git远程库读取的配置文件名称，注意无需扩展名
+      name: consumer-config
+      # 环境选择
+      profile: dev

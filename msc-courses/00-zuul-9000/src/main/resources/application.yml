@@ -1,0 +1,32 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka
+
+spring:
+  application:
+    name: abcmsc-zuul-depart
+  main:
+    allow-bean-definition-overriding: true
+
+zuul:
+  routes:
+    #指定路由规则
+    abcmsc-consumer-depart-8880: /abc8880/**
+    abcmsc-consumer-depart-8890: /abc8890/**
+    abcmsc-consumer-depart: /abc123/**
+  #屏蔽指定微服务名称
+#  ignored-services: abcmsc-consumer-depart-8880
+  #屏蔽所有微服务名称
+  ignored-services: "*"
+  #指定统一的前缀
+  prefix: /abc
+  #屏蔽指定的URI
+  ignored-patterns: /**/list/**
+  #屏蔽掉指定的敏感头信息，其会将原来默认的Cookie、Set-Cookie、Authorization替换掉
+  sensitive-headers: token
+
+
