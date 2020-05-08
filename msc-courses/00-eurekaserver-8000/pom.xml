@@ -49,10 +49,47 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>eureka</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.13</version>
+				<configuration>
+					<!--dockerfile指令：变成插件配置-->
+					<!--用于指定镜像名称-->
+					<imageName>hub.kaikeba.com/jenkins/${project.artifactId}:${project.version}</imageName>
+					<!--用于指定基础镜像，相当于Dockerfile中的FROM指令-->
+					<!--FROM jdk1.8:v1-->
+					<baseImage>jdk1.8:v1</baseImage>
+					<!--指定工作目录-->
+					<!--<workdir>/</workdir>-->
+					<maintainer>13070160455@163.com</maintainer>
+					<cmd>["java","-version"]</cmd>
+					<!--相当于Dockerfile的ENTRYPOINT-->
+					<!--dockerfile:entryPoint-->
+					<entryPoint>["java", "-jar","/${project.build.finalName}.jar"]</entryPoint>
+					<serverId>my-docker-registry</serverId>
+					<!--是否跳过docker build-->
+					<!--<skipDockerBuild>true</skipDockerBuild>-->
+					<resources>
+						<resource>
+							<!--workdir ADD xx.jar-->
+							<!--workdir 工作目录-->
+							<targetPath>/</targetPath>
+							<!--用于指定需要复制的根目录，${project.build.directory}表示target目录-->
+							<directory>${project.build.directory}</directory>
+							<!--用于指定需要复制的文件。${project.build.finalName}.jar指的是打包后的jar包-->
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+					<!--使用本地镜像仓库-->
+					<!--<dockerHost>http://192.168.2.20:2375</dockerHost>-->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
